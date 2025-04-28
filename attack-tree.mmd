@@ -1,101 +1,119 @@
-mindmap
-  root((Library System
-    Attack Tree))
-    1((Unauthorized Access
-      to User Accounts))
-        1.1((Password-Based
-            Attacks))
-            1.1.1((Brute Force
-                Attack))
-                (Exploit weak password
-                policy SR-001)
-                (Automated login
-                attempts)
-                (Dictionary attacks on
-                common passwords)
-            1.1.2((Password Storage
-                Exploitation SR-006))
-                (Access unhashed
-                passwords)
-                (Rainbow table
-                attacks)
-                (Intercept password
-                transmission)
-        1.2((Session Hijacking
-            SR-002))
-            1.2.1((Session Token
-                Theft))
-                (XSS to steal
-                cookies)
-                (Man-in-the-middle
-                attacks)
-                (Insecure session
-                storage)
-            1.2.2((Session
-                Fixation))
-                (Force known
-                session ID)
-                (Missing session
-                regeneration)
-                (Replay old
-                tokens)
-    2((Database
-      Compromise))
-        2.1((SQL Injection
-            SR-003))
-            2.1.1((Direct Controller
-                Access))
-                (Media controller
-                injection)
-                (User controller
-                injection)
-                (Auth controller
-                injection)
-            2.1.2((Input Validation
-                Bypass SR-005))
-                (Malformed input
-                exploitation)
-                (Special character
-                injection)
-                (Unicode character
-                attacks)
-    3((Authorization
-      Bypass SR-004))
-        3.1((Privilege
-            Escalation))
-            3.1.1((Horizontal
-                Privilege))
-                (Parameter
-                tampering)
-                (Direct object
-                references)
-                (Session
-                manipulation)
-            3.1.2((Vertical
-                Privilege))
-                (Role
-                manipulation)
-                (Missing access
-                controls)
-                (Authorization header
-                manipulation)
-    4((System Integrity
-      Attacks))
-        4.1((Data
-            Manipulation))
-            4.1.1((Book Record
-                Tampering))
-                (Unauthorized
-                modifications)
-                (False data
-                injection)
-                (Record
-                deletion)
-            4.1.2((User Profile
-                Manipulation))
-                (Privilege
-                modification)
-                (Account details
-                alteration)
-                (Role assignment
-                exploitation) 
+flowchart TD
+    %% Root Node
+    Root[Compromise Library Management System Security]
+
+    %% Level 1 - Main Attack Categories
+    Auth[Authentication Bypass]
+    Data[Data Compromise]
+    Access[Access Control Bypass]
+    Integ[System Integrity]
+
+    %% Level 2 - Authentication Attacks (SR-001, SR-006)
+    Pass[Password Attacks]
+    Sess[Session Attacks]
+
+    %% Level 3 - Password Attacks
+    BF[Brute Force]
+    Dict[Dictionary Attack]
+    Hash[Hash Exploitation]
+
+    %% Level 4 - Password Attack Details
+    BF1[Exploit weak password policy<br/>SR-001]
+    BF2[Automated login attempts]
+    Dict1[Common password lists]
+    Hash1[Access unhashed passwords<br/>SR-006]
+    Hash2[Rainbow table attacks]
+
+    %% Level 3 - Session Attacks (SR-002)
+    ST[Session Token Theft]
+    SF[Session Fixation]
+
+    %% Level 4 - Session Attack Details
+    ST1[XSS to steal cookies]
+    ST2[Man-in-the-middle]
+    SF1[Force known session ID]
+    SF2[Missing session regeneration]
+
+    %% Level 2 - Data Attacks (SR-003, SR-005)
+    SQL[SQL Injection]
+    Val[Input Validation Bypass]
+
+    %% Level 3 - SQL Injection Details
+    Inj[Direct SQL Injection<br/>SR-003]
+    ValB[Validation Bypass<br/>SR-005]
+
+    %% Level 4 - SQL Injection Methods
+    Inj1[Parameter manipulation]
+    Inj2[Union-based attacks]
+    Val1[Special character injection]
+    Val2[Unicode character attacks]
+
+    %% Level 2 - Access Control (SR-004)
+    Priv[Privilege Escalation]
+    AuthB[Authorization Bypass]
+
+    %% Level 3 - Access Control Details
+    Hor[Horizontal Escalation]
+    Ver[Vertical Escalation]
+
+    %% Level 4 - Access Control Methods
+    Hor1[Parameter tampering]
+    Hor2[Direct object references]
+    Ver1[Role manipulation]
+    Ver2[Missing access controls]
+
+    %% Connections
+    Root --> Auth
+    Root --> Data
+    Root --> Access
+    Root --> Integ
+
+    Auth --> Pass
+    Auth --> Sess
+
+    Pass --> BF
+    Pass --> Dict
+    Pass --> Hash
+
+    BF --> BF1
+    BF --> BF2
+    Dict --> Dict1
+    Hash --> Hash1
+    Hash --> Hash2
+
+    Sess --> ST
+    Sess --> SF
+
+    ST --> ST1
+    ST --> ST2
+    SF --> SF1
+    SF --> SF2
+
+    Data --> SQL
+    Data --> Val
+
+    SQL --> Inj
+    SQL --> ValB
+
+    Inj --> Inj1
+    Inj --> Inj2
+    ValB --> Val1
+    ValB --> Val2
+
+    Access --> Priv
+    Access --> AuthB
+
+    Priv --> Hor
+    Priv --> Ver
+
+    Hor --> Hor1
+    Hor --> Hor2
+    Ver --> Ver1
+    Ver --> Ver2
+
+    %% Styling
+    style Root fill:#ff6b6b
+    style Auth,Data,Access,Integ fill:#4ecdc4
+    style Pass,Sess,SQL,Val,Priv,AuthB fill:#45b7af
+    style BF,Dict,Hash,ST,SF,Inj,ValB,Hor,Ver fill:#3da29b
+    style BF1,BF2,Dict1,Hash1,Hash2,ST1,ST2,SF1,SF2,Inj1,Inj2,Val1,Val2,Hor1,Hor2,Ver1,Ver2 fill:#2c7a74 

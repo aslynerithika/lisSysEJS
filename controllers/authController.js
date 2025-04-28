@@ -51,24 +51,31 @@ class AuthController {
 
       // Input validation checks
       if (!name || !email || !username || !password || !DOB || !number) {
-        throw new Error("All fields are required");
+        throw new Error("MISSING_BODY_FIELDS");
       }
 
       // Email format validation
       const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       if (!emailRegex.test(email)) {
-        throw new Error("Invalid email format");
+        throw new Error("INVALID_EMAIL_FORMAT");
       }
 
       // Username validation (alphanumeric, 3-20 chars)
       const usernameRegex = /^[a-zA-Z0-9_]{3,20}$/;
       if (!usernameRegex.test(username)) {
-        throw new Error("Username must be 3-20 characters, alphanumeric");
+        throw new Error("INVALID_USERNAME_FORMAT");
       }
 
-      // Password validation (already enforced by HTML5 pattern)
-      if (password.length < 8) {
-        throw new Error("Password must be at least 8 characters");
+      // Password complexity regex
+      const passwordRegex = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
+      if (!passwordRegex.test(password)) {
+        throw new Error("INVALID_PASSWORD_FORMAT");
+      }
+
+      // Phone number validation
+      const phoneRegex = /^\d{11}$/;
+      if (!phoneRegex.test(number)) {
+        throw new Error("INVALID_PHONE_NUMBER");
       }
 
       // Hash the password
