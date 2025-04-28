@@ -1,0 +1,111 @@
+workspace "Library Management System" "A modern library management system for managing books, users, and library operations." {
+
+    model {
+        customer = person "Library Member" "A member of the library who can borrow books and manage their account." "Customer"
+        librarian = person "Librarian" "Library staff member who manages the library collection and member accounts." "Staff"
+
+        group "Library System" {
+            librarySystem = softwaresystem "Library Management System" "Manages library operations, book catalog, and member accounts." {
+                singlePageApplication = container "Single-Page Application" "Provides all library functionality via web browser." "JavaScript and EJS" "Web Browser"
+                
+                webApplication = container "Web Application" "Serves the library management web interface." "Node.js and Express" {
+                    # Controllers
+                    mediaController = component "Media Controller" "Manages library media items and catalog." "Express Controller"
+                    authController = component "Auth Controller" "Manages user authentication and authorization." "Express Controller"
+                    userController = component "User Controller" "Handles user profile and account management." "Express Controller"
+
+                    # Security Components
+                    passwordSecurity = component "Password Security" "Implements SR-001 & SR-006: Password hashing and complexity"
+                    sessionSecurity = component "Session Security" "Implements SR-002: Secure session management"
+                    roleSecurity = component "Role Security" "Implements SR-004: Role-based access control"
+                    querySecurity = component "Query Security" "Implements SR-003: SQL injection prevention"
+                }
+                
+                database = container "Database" "Stores library data including books, users, and transactions." "MySQL Database" "Database"
+                
+                security = container "Security System" "Handles authentication and authorization." {
+                    authMiddleware = component "Auth Middleware" "Verifies user authentication and permissions." "Express Middleware"
+                    errorMiddleware = component "Error Middleware" "Handles and secures error responses." "Express Middleware"
+                }
+            }
+        }
+
+        # Relationships between people and software systems
+        customer -> singlePageApplication "Uses library services through"
+        librarian -> singlePageApplication "Manages library through"
+
+        # Relationships to/from containers
+        singlePageApplication -> webApplication "Makes API calls to" "HTTPS/JSON"
+        webApplication -> database "Reads from and writes to" "SQL/TCP"
+        webApplication -> security "Uses for authentication and error handling"
+
+        # Relationships to/from components
+        singlePageApplication -> mediaController "Browses and manages media through"
+        singlePageApplication -> authController "Authenticates with"
+        singlePageApplication -> userController "Manages account through"
+        
+        authMiddleware -> webApplication "Protects all routes in"
+        errorMiddleware -> webApplication "Handles errors for all routes in"
+        
+        # Controller to Security Component Relationships
+        mediaController -> roleSecurity "Uses for access control"
+        authController -> passwordSecurity "Uses for password hashing"
+        authController -> sessionSecurity "Uses for session management"
+        userController -> roleSecurity "Uses for access control"
+
+        # Security Component to Query Security to Database Relationships
+        roleSecurity -> querySecurity "Uses for secure database access"
+        passwordSecurity -> querySecurity "Uses for secure database access"
+        sessionSecurity -> querySecurity "Uses for secure database access"
+        querySecurity -> database "Executes all secure queries on"
+    }
+
+    views {
+        component webApplication "Components" {
+            include *
+            exclude customer librarian
+            autoLayout
+            description "The component diagram for the Library Management System showing secured routes."
+        }
+
+        styles {
+            element "Person" {
+                color #ffffff
+                fontSize 22
+                shape Person
+            }
+            element "Customer" {
+                background #08427b
+            }
+            element "Staff" {
+                background #999999
+            }
+            element "Software System" {
+                background #1168bd
+                color #ffffff
+            }
+            element "Container" {
+                background #438dd5
+                color #ffffff
+            }
+            element "Web Browser" {
+                shape WebBrowser
+            }
+            element "Database" {
+                shape Cylinder
+            }
+            element "Component" {
+                background #85bbf0
+                color #000000
+            }
+            element "Security" {
+                background #ff6b6b
+                color #ffffff
+            }
+            element "Protected Route" {
+                background #ffd700
+                color #000000
+            }
+        }
+    }
+}

@@ -1,0 +1,79 @@
+flowchart TD
+    %% Root Node
+    Root["Library System Attack Tree"]
+
+    %% Level 1 - Main Attack Categories with subgraph
+    subgraph Level1[" "]
+        direction LR
+        UA["1. Unauthorized Access\nto User Accounts"]
+        DB["2. Database\nCompromise"]
+        AB["3. Authorization\nBypass SR-004"]
+        SI["4. System Integrity\nAttacks"]
+    end
+
+    %% Level 2 - Attack Subcategories
+    subgraph Level2[" "]
+        direction LR
+        PA["1.1 Password-Based\nAttacks"]
+        SH["1.2 Session Hijacking\nSR-002"]
+        SQL["2.1 SQL Injection\nSR-003"]
+        PE["3.1 Privilege\nEscalation"]
+        DM["4.1 Data\nManipulation"]
+    end
+
+    %% Level 3 - Specific Attack Methods
+    subgraph Level3[" "]
+        direction LR
+        subgraph BFGroup[" "]
+            BF["1.1.1 Brute Force\nAttack"]
+            PS["1.1.2 Password Storage\nExploitation SR-006"]
+        end
+        subgraph SHGroup[" "]
+            ST["1.2.1 Session Token\nTheft"]
+            SF["1.2.2 Session\nFixation"]
+        end
+        subgraph SQLGroup[" "]
+            DC["2.1.1 Direct Controller\nAccess"]
+            IV["2.1.2 Input Validation\nBypass SR-005"]
+        end
+        subgraph PEGroup[" "]
+            HP["3.1.1 Horizontal\nPrivilege Escalation"]
+            VP["3.1.2 Vertical\nPrivilege Escalation"]
+        end
+        subgraph DMGroup[" "]
+            BT["4.1.1 Book Record\nTampering"]
+            UP["4.1.2 User Profile\nManipulation"]
+        end
+    end
+
+    %% Connections
+    Root --> Level1
+    UA --> PA
+    UA --> SH
+    DB --> SQL
+    AB --> PE
+    SI --> DM
+
+    PA --> BF
+    PA --> PS
+    SH --> ST
+    SH --> SF
+    SQL --> DC
+    SQL --> IV
+    PE --> HP
+    PE --> VP
+    DM --> BT
+    DM --> UP
+
+    %% Styling
+    classDef root fill:#ff6b6b,stroke:#333,stroke-width:4px,rx:10,ry:10
+    classDef level1 fill:#4ecdc4,stroke:#333,stroke-width:2px,rx:10,ry:10
+    classDef level2 fill:#45b7af,stroke:#333,stroke-width:2px,rx:10,ry:10
+    classDef level3 fill:#3da29b,stroke:#333,stroke-width:2px,rx:10,ry:10
+    classDef transparent fill:none,stroke:none
+    
+    class Root root
+    class UA,DB,AB,SI level1
+    class PA,SH,SQL,PE,DM level2
+    class BF,PS,ST,SF,DC,IV,HP,VP,BT,UP level3
+    class Level1,Level2,Level3,BFGroup,SHGroup,SQLGroup,PEGroup,DMGroup transparent 

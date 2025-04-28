@@ -1,0 +1,101 @@
+mindmap
+  root((Library System
+    Attack Tree))
+    1((Unauthorized Access
+      to User Accounts))
+        1.1((Password-Based
+            Attacks))
+            1.1.1((Brute Force
+                Attack))
+                (Exploit weak password
+                policy SR-001)
+                (Automated login
+                attempts)
+                (Dictionary attacks on
+                common passwords)
+            1.1.2((Password Storage
+                Exploitation SR-006))
+                (Access unhashed
+                passwords)
+                (Rainbow table
+                attacks)
+                (Intercept password
+                transmission)
+        1.2((Session Hijacking
+            SR-002))
+            1.2.1((Session Token
+                Theft))
+                (XSS to steal
+                cookies)
+                (Man-in-the-middle
+                attacks)
+                (Insecure session
+                storage)
+            1.2.2((Session
+                Fixation))
+                (Force known
+                session ID)
+                (Missing session
+                regeneration)
+                (Replay old
+                tokens)
+    2((Database
+      Compromise))
+        2.1((SQL Injection
+            SR-003))
+            2.1.1((Direct Controller
+                Access))
+                (Media controller
+                injection)
+                (User controller
+                injection)
+                (Auth controller
+                injection)
+            2.1.2((Input Validation
+                Bypass SR-005))
+                (Malformed input
+                exploitation)
+                (Special character
+                injection)
+                (Unicode character
+                attacks)
+    3((Authorization
+      Bypass SR-004))
+        3.1((Privilege
+            Escalation))
+            3.1.1((Horizontal
+                Privilege))
+                (Parameter
+                tampering)
+                (Direct object
+                references)
+                (Session
+                manipulation)
+            3.1.2((Vertical
+                Privilege))
+                (Role
+                manipulation)
+                (Missing access
+                controls)
+                (Authorization header
+                manipulation)
+    4((System Integrity
+      Attacks))
+        4.1((Data
+            Manipulation))
+            4.1.1((Book Record
+                Tampering))
+                (Unauthorized
+                modifications)
+                (False data
+                injection)
+                (Record
+                deletion)
+            4.1.2((User Profile
+                Manipulation))
+                (Privilege
+                modification)
+                (Account details
+                alteration)
+                (Role assignment
+                exploitation) 

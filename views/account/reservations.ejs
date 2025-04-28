@@ -10,11 +10,11 @@
   </head>
 
   <body>
-    <%- include('./partials/header'); %>
+    <%- include('../partials/header'); %>
     <h1 class="header-title">Reservations</h1>
 
     <div class="container">
-      <%- include('./partials/sidebar'); %>
+      <%- include('../partials/sidebar'); %>
       <div class="main-content">
         <div class="categories-books">
           <% books.forEach((book) => { %>
@@ -24,10 +24,7 @@
                 <i class="bi bi-dash-circle-fill" style="color: black"></i>
               </div>
               <a href="/media?id=<%= book.id %>">
-                <img
-                  src="<%= book.image %>"
-                  alt="The Psychology Of Money"
-                />
+                <img src="<%= book.image %>" alt="The Psychology Of Money" />
               </a>
             </div>
             <h3><%= book.name %></h3>

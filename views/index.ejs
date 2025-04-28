@@ -12,7 +12,7 @@
         <img src="/images/LibLogo.png" alt="Library Logo" class="logo-img"
       /></a>
       <div class="search-container">
-        <form action="/search" method="GET">
+        <form action="/media/search" method="GET">
           <input
             type="text"
             class="search-input"
@@ -29,10 +29,20 @@
   </head>
 
   <body>
-    <div class="header-title" style="display: flex; justify-content: space-between; align-content: center; padding: 0 20px;">
+    <div
+      class="header-title"
+      style="
+        display: flex;
+        justify-content: space-between;
+        align-content: center;
+        padding: 0 20px;
+      "
+    >
       <h1 class="header-title">SHU Library</h1>
       <button class="add-book-button" id="add-media-button">
-        <a class="add-book-button" style="color: white;" href="/add-media">Add Media </a>
+        <a class="add-book-button" style="color: white" href="/media/add"
+          >Add Media
+        </a>
       </button>
     </div>
     <!-- <ul style="display: inline-flex; list-style-type: none; min-width: 100%;" class="header-title">
@@ -43,7 +53,6 @@
         
       </li>
     </ul> -->
-    
 
     <div class="container">
       <%- include('./partials/sidebar'); %>
@@ -63,12 +72,12 @@
                         style="color: <%= book.wishlisted ? 'gold' : 'black' %>"
                       ></i>
                     </div>
-                    <a href="/media?id=<%= book.id %>">
-                    <img
-                      src="<%= book.image %>"
-                      alt="The Psychology Of Money"
-                    />
-                  </a>
+                    <a href="/media/<%= book.id %>">
+                      <img
+                        src="<%= book.image %>"
+                        alt="The Psychology Of Money"
+                      />
+                    </a>
                   </div>
                   <h3><%= book.name %></h3>
                   <p><%= book.author %></p>
@@ -101,11 +110,9 @@
                   ></i>
                 </div>
                 <a href="/media?id=<%= book.id %>">
-                  <img
-                    src="<%= book.image %>"
-                    alt="The Psychology Of Money"
-                  />
-                </a>              </div>
+                  <img src="<%= book.image %>" alt="The Psychology Of Money" />
+                </a>
+              </div>
               <h3><%= book.name %></h3>
               <p><%= book.author %></p>
             </div>
@@ -115,14 +122,17 @@
       </div>
     </div>
   </body>
-  <script>  
-    if("<%= user.role %>" == "c") document.getElementById("add-media-button").setAttribute("hidden", "hidden");
-    
+  <script>
+    if ("<%= user.role %>" == "c")
+      document
+        .getElementById("add-media-button")
+        .setAttribute("hidden", "hidden");
+
     document.querySelectorAll(".book-wishlist").forEach((element) => {
       const star = element.querySelector("i");
 
       element.addEventListener("click", async () => {
-        const request = await fetch("/wishlist", {
+        const request = await fetch("/wishlist/" + element.dataset.id, {
           method: "POST",
           body: JSON.stringify({
             mediaId: element.dataset.id,

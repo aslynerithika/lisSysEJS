@@ -1,0 +1,81 @@
+workspace "Library Management System" "A modern library management system for managing books, users, and library operations." {
+
+    model {
+        customer = person "Library Member" "A member of the library who can borrow books and manage their account." "Customer"
+        librarian = person "Librarian" "Library staff member who manages the library collection and member accounts." "Staff"
+
+        group "Library System" {
+            librarySystem = softwaresystem "Library Management System" "Manages library operations, book catalog, and member accounts." {
+                singlePageApplication = container "Single-Page Application" "Provides all library functionality via web browser." "JavaScript and EJS" "Web Browser"
+                
+                webApplication = container "Web Application" "Serves the library management web interface." "Node.js and Express" {
+                    # Controllers
+                    mediaController = component "Media Controller" "Manages library media items and catalog." "Express Controller"
+                    authController = component "Auth Controller" "Manages user authentication and authorization." "Express Controller"
+                    userController = component "User Controller" "Handles user profile and account management." "Express Controller"
+                }
+                
+                database = container "Database" "Stores library data including books, users, and transactions." "MySQL Database" "Database"
+            }
+        }
+
+        # Relationships between people and software systems
+        customer -> singlePageApplication "Uses library services through"
+        librarian -> singlePageApplication "Manages library through"
+
+        # Relationships to/from containers
+        singlePageApplication -> webApplication "Makes API calls to" "HTTPS/JSON"
+        webApplication -> database "Reads from and writes to" "SQL/TCP"
+
+        # Relationships to/from components
+        singlePageApplication -> mediaController "Browses and manages media through"
+        singlePageApplication -> authController "Authenticates with"
+        singlePageApplication -> userController "Manages account through"
+
+        # Direct database connections for controllers
+        mediaController -> database "Reads and writes media data" "SQL/TCP"
+        authController -> database "Manages user authentication data" "SQL/TCP"
+        userController -> database "Manages user profile data" "SQL/TCP"
+    }
+
+    views {
+        component webApplication "Components" {
+            include *
+            exclude customer librarian
+            autoLayout
+            description "The component diagram for the Library Management System."
+        }
+
+        styles {
+            element "Person" {
+                color #ffffff
+                fontSize 22
+                shape Person
+            }
+            element "Customer" {
+                background #08427b
+            }
+            element "Staff" {
+                background #999999
+            }
+            element "Software System" {
+                background #1168bd
+                color #ffffff
+            }
+            element "Container" {
+                background #438dd5
+                color #ffffff
+            }
+            element "Web Browser" {
+                shape WebBrowser
+            }
+            element "Database" {
+                shape Cylinder
+            }
+            element "Component" {
+                background #85bbf0
+                color #000000
+            }
+        }
+    }
+}

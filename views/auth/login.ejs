@@ -1,0 +1,105 @@
+<%- include('../partials/header'); %>
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login Box</title>
+    <style>
+      /* Basic styling for the page and login box */
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background: url("/images/Background.jpg") no-repeat center center fixed;
+        background-size: cover;
+      }
+
+      .login-box {
+        background-color: #ffffff;
+        padding: 30px;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+        width: 500px;
+        text-align: center;
+      }
+      .logo-img {
+        width: 200px; /* Adjust size as needed */
+        margin-bottom: 20px;
+      }
+      .login-box h2 {
+        margin-bottom: 20px;
+        color: #333;
+      }
+
+      .login-box input[type="text"],
+      .login-box input[type="password"] {
+        width: 80%;
+        padding: 10px;
+        margin: 10px 0;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+      }
+
+      .login-box input[type="submit"] {
+        width: 30%;
+        padding: 10px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+
+      .login-box input[type="submit"]:hover {
+        background-color: #0056b3;
+      }
+      #reg-button {
+        width: 50%;
+        padding: 10px;
+        background-color: #a52a2a;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+      .login-box input[type="button"]:hover {
+        background-color: #a52a2a;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="login-box">
+      <img src="/images/LibLogo.png" alt="Library Logo" class="logo-img" />
+      <p>Registered Member's Login</p>
+      <form id="loginForm" action="/login" method="post">
+        <input
+          type="text"
+          id="username-box"
+          name="username"
+          placeholder="Email or Username"
+          required
+        />
+        <input
+          type="password"
+          id="password-box"
+          name="password"
+          placeholder="Password"
+          required
+        />
+        <input type="submit" id="ubmit-button" value="Sign in" />
+        <p>Or</p>
+        <p>New Registration</p>
+        <button id="reg-button">
+          <a style="color: white" href="/signUp">Sign up for new account</a>
+        </button>
+      </form>
+    </div>
+  </body>
+  <script src="/javascripts/script.js"></script>
+</html>
+
+<%- include('../partials/sidebar'); %>
